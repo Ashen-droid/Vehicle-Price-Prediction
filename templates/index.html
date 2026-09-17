@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CarMind AI - Intelligent Vehicle Valuation</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="container">
+        <div class="form-section">
+            <h2>Tell us about your car</h2>
+            <p>Enter the vehicle details and let our machine learning model estimate its value.</p>
+
+            <form id="prediction-form">
+                <div class="input-group">
+                    <label>Make Year</label>
+                    <input type="number" id="make_year" placeholder="e.g. 2018" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Engine Capacity (CC)</label>
+                    <input type="number" id="engine_cc" placeholder="e.g. 1500" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Mileage (km driven)</label>
+                    <input type="number" id="km_driven" placeholder="e.g. 45000" required>
+                </div>
+
+
+                <button type="submit" class="predict-btn">Predict Vehicle Price</button>
+            </form>
+        </div>
+
+        <div class="result-section">
+            <h3>AI MARKET ESTIMATE</h3>
+            <p>Estimated Value</p>
+            <h1 id="estimated-price">Rs. 0.00</h1>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('prediction-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const data = {
+                "make_year": parseInt(document.getElementById('make_year').value),
+                "engine_capacity(CC)": parseFloat(document.getElementById('engine_cc').value),
+                "km_driven": parseFloat(document.getElementById('km_driven').value),
+                "brand": 5, "model": 12, "transmission": 1, "fuel_type": 1,
+                "ownership": 0, "has_insurance": 1, "spare_key": 1
+            };
+
+            fetch('/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.estimated_price) {
+                        document.getElementById('estimated-price').innerText = 'Rs. ' + data.estimated_price.toLocaleString();
+                    } else {
+                        alert('Error: ' + data.error);
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        });
+    </script>
+</body>
+
+</html>

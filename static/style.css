@@ -1,0 +1,87 @@
+body {
+    background-color: #121212;
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    display: flex;
+    background-color: #1e1e1e;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    width: 80%;
+    max-width: 900px;
+}
+
+.form-section {
+    flex: 1;
+    padding-right: 30px;
+}
+
+.result-section {
+    flex: 1;
+    background: linear-gradient(135deg, #2a2a2a, #1a1a1a);
+    border-radius: 10px;
+    padding: 30px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+h2 {
+    color: #f5f5f5;
+}
+
+p {
+    color: #aaaaaa;
+    font-size: 14px;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #dddddd;
+    font-size: 13px;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    background-color: #2c2c2c;
+    border: 1px solid #444;
+    border-radius: 5px;
+    color: white;
+}
+
+.predict-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #ff5722;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.predict-btn:hover {
+    background-color: #e64a19;
+}
+
+#estimated-price {
+    font-size: 40px;
+    color: #ffccbc;
+    margin-top: 10px;
+}
