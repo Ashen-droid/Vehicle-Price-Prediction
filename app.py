@@ -15,8 +15,12 @@ def home():
 def predict_price():
     try:
         data = request.json
-        
+             
         input_data = pd.DataFrame([data])
+        
+        expected_columns = ['brand', 'model', 'transmission', 'make_year', 'fuel_type', 
+                            'engine_capacity(CC)', 'km_driven', 'ownership', 'has_insurance', 'spare_key']
+        input_data = input_data[expected_columns]
         
         scaled_data = scaler.transform(input_data)
         
@@ -26,6 +30,3 @@ def predict_price():
     
     except Exception as e:
         return jsonify({'error': str(e)})
-
-if __name__ == '__main__':
-    app.run(debug=True, port=5000)
