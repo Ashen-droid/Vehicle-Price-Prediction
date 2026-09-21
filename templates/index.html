@@ -4,64 +4,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CarMind AI - Intelligent Vehicle Valuation</title>
+    <title>AutoValue AI - Smart Vehicle Pricing</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Poppins:wght@300;400;500;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@300;400;500;600&display=swap"
         rel="stylesheet">
+
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
-    <div class="container">
-        <div class="form-section">
-            <h2>Tell us about your car</h2>
-            <p>Enter the vehicle details and let our machine learning model estimate its value.</p>
+    <div class="main-wrapper">
 
-            <form id="prediction-form">
-                <div class="input-group">
-                    <label>Make Year</label>
-                    <select id="make_year" required></select>
-                </div>
-
-                <div class="input-group">
-                    <label>Engine Capacity (CC)</label>
-                    <select id="engine_cc" required></select>
-                </div>
-
-                <div class="input-group">
-                    <label>Mileage (km driven)</label>
-                    <input type="number" id="km_driven" list="mileage_list" placeholder="Select or type (e.g. 45000)"
-                        min="0" required>
-                    <datalist id="mileage_list"></datalist>
-                </div>
-
-                <div class="input-group">
-                    <label>Fuel Type</label>
-                    <select id="fuel_type">
-                        <option value="1">Petrol</option>
-                        <option value="0">Diesel</option>
-                        <option value="2">CNG</option>
-                    </select>
-                </div>
-
-                <div class="input-group">
-                    <label>Transmission</label>
-                    <select id="transmission">
-                        <option value="1">Automatic</option>
-                        <option value="0">Manual</option>
-                    </select>
-                </div>
-
-                <button type="submit" class="predict-btn">Predict Vehicle Price</button>
-            </form>
+        <div class="top-header">
+            <span class="logo-icon">✨</span>
+            <h1>AutoValue AI</h1>
+            <span class="subtitle">Smart Vehicle Pricing</span>
         </div>
 
-        <div class="result-section">
-            <h3>AI MARKET ESTIMATE</h3>
-            <p>Estimated Value</p>
-            <h1 id="estimated-price">Rs. 0.00</h1>
+        <div class="container">
+            <div class="form-section">
+                <h2>Tell us about your car</h2>
+                <p>Enter the vehicle details and let our machine learning model estimate its value.</p>
+
+                <form id="prediction-form">
+                    <div class="input-group">
+                        <label>Make Year</label>
+                        <select id="make_year" required></select>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Engine Capacity (CC)</label>
+                        <select id="engine_cc" required></select>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Mileage (km driven)</label>
+                        <input type="number" id="km_driven" list="mileage_list"
+                            placeholder="Select or type (e.g. 45000)" min="0" required>
+                        <datalist id="mileage_list"></datalist>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Fuel Type</label>
+                        <select id="fuel_type">
+                            <option value="1">Petrol</option>
+                            <option value="0">Diesel</option>
+                            <option value="2">CNG</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Transmission</label>
+                        <select id="transmission">
+                            <option value="1">Automatic</option>
+                            <option value="0">Manual</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="predict-btn">Predict Vehicle Price</button>
+                </form>
+            </div>
+
+            <div class="result-section">
+                <h3>AI MARKET ESTIMATE</h3>
+                <p>Estimated Value</p>
+                <h1 id="estimated-price">Rs. 0.00</h1>
+            </div>
         </div>
     </div>
 
@@ -69,28 +80,26 @@
         const yearDropdown = document.getElementById('make_year');
         for (let year = 2025; year >= 1990; year--) {
             let option = document.createElement('option');
-            option.value = year;
-            option.text = year;
+            option.value = year; option.text = year;
             yearDropdown.appendChild(option);
         }
 
         const ccDropdown = document.getElementById('engine_cc');
         for (let cc = 800; cc <= 3000; cc += 50) {
             let option = document.createElement('option');
-            option.value = cc;
-            option.text = cc + " CC";
+            option.value = cc; option.text = cc + " CC";
             ccDropdown.appendChild(option);
         }
 
         const mileageDatalist = document.getElementById('mileage_list');
         for (let i = 0; i <= 300000; i += 500) {
             let option = document.createElement('option');
+            option.value = i;
             mileageDatalist.appendChild(option);
         }
 
         document.getElementById('prediction-form').addEventListener('submit', function (e) {
             e.preventDefault();
-
             const data = {
                 "make_year": parseInt(document.getElementById('make_year').value),
                 "engine_capacity(CC)": parseFloat(document.getElementById('engine_cc').value),
@@ -102,9 +111,7 @@
 
             fetch('/predict', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data),
             })
                 .then(response => response.json())
@@ -115,9 +122,7 @@
                         alert('Error: ' + data.error);
                     }
                 })
-                .catch((error) => {
-                    console.error('Error:', error);
-                });
+                .catch((error) => console.error('Error:', error));
         });
     </script>
 </body>
