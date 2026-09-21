@@ -1,7 +1,7 @@
 body {
-    background-color: #0d0d0d;
+    background-color: #121212;
     color: white;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Inter', sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -9,36 +9,72 @@ body {
     margin: 0;
 }
 
+.main-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.top-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.logo-icon {
+    font-size: 24px;
+    margin-right: 10px;
+    color: #ff5722;
+}
+
+.top-header h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0;
+    color: #ffffff;
+    letter-spacing: 0.5px;
+}
+
+.top-header .subtitle {
+    font-size: 14px;
+    color: #00d2ff;
+    margin-left: 12px;
+    padding-left: 12px;
+    border-left: 2px solid #333;
+    font-weight: 500;
+}
+
 .container {
     display: flex;
-    background-color: #1a1a1a;
-    border-radius: 20px;
-    padding: 40px;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9);
-    width: 85%;
-    max-width: 1000px;
+    background-color: #1e1e1e;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    width: 80%;
+    max-width: 900px;
 }
 
 .form-section {
     flex: 1;
-    padding-right: 40px;
+    padding-right: 30px;
 }
 
 .form-section h2 {
-    color: #ffffff;
+    color: #f5f5f5;
     font-family: 'Montserrat', sans-serif;
-    font-size: 32px;
-    font-weight: 800;
+    font-size: 22px;
+    font-weight: 700;
     margin-top: 0;
-    margin-bottom: 10px;
-    letter-spacing: 0.5px;
+    margin-bottom: 8px;
 }
 
 .form-section p {
-    color: #b3b3b3;
-    font-size: 15px;
-    font-weight: 300;
-    margin-bottom: 30px;
+    color: #999999;
+    font-size: 13px;
+    font-weight: 400;
+    margin-bottom: 25px;
 }
 
 .result-section {
@@ -47,57 +83,56 @@ body {
     background-size: cover;
     background-position: center;
     background-blend-mode: multiply;
-    background-color: rgba(30, 30, 30, 0.85);
-    border-radius: 15px;
-    padding: 40px;
+    background-color: rgba(35, 35, 35, 0.85);
+    border-radius: 10px;
+    padding: 30px;
     text-align: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.9);
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.7);
 }
 
 .result-section h3 {
     font-family: 'Montserrat', sans-serif;
-    font-size: 26px;
+    font-size: 22px;
     font-weight: 800;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
     color: #ffffff;
-    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.9);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
     margin-bottom: 5px;
     text-transform: uppercase;
 }
 
 .result-section p {
-    color: #cccccc;
-    font-size: 18px;
+    color: #bbbbbb;
+    font-size: 14px;
     font-weight: 400;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
-    margin-bottom: 30px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+    margin-bottom: 20px;
 }
 
 .input-group {
-    margin-bottom: 22px;
+    margin-bottom: 18px;
 }
 
 label {
     display: block;
-    margin-bottom: 8px;
-    color: #e0e0e0;
-    font-size: 14px;
+    margin-bottom: 6px;
+    color: #cccccc;
+    font-size: 13px;
     font-weight: 500;
-    letter-spacing: 0.3px;
 }
 
 input,
 select {
     width: 100%;
-    padding: 12px 15px;
-    font-family: 'Poppins', sans-serif;
-    font-size: 15px;
-    background-color: #262626;
-    border: 1px solid #404040;
-    border-radius: 8px;
+    padding: 10px 12px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    background-color: #2a2a2a;
+    border: 1px solid #444444;
+    border-radius: 6px;
     color: white;
     outline: none;
     box-sizing: border-box;
@@ -107,38 +142,33 @@ select {
 input:focus,
 select:focus {
     border-color: #ff5722;
-    background-color: #2d2d2d;
+    background-color: #333333;
 }
 
 .predict-btn {
     width: 100%;
-    padding: 15px;
+    padding: 12px;
     font-family: 'Montserrat', sans-serif;
-    font-size: 16px;
+    font-size: 14px;
     background-color: #ff5722;
     color: white;
     border: none;
-    border-radius: 8px;
-    font-weight: 700;
-    letter-spacing: 1px;
+    border-radius: 6px;
+    font-weight: 600;
     cursor: pointer;
-    margin-top: 15px;
-    transition: background-color 0.3s, transform 0.1s;
+    margin-top: 10px;
+    transition: background-color 0.3s;
 }
 
 .predict-btn:hover {
     background-color: #e64a19;
 }
 
-.predict-btn:active {
-    transform: scale(0.98);
-}
-
 #estimated-price {
     font-family: 'Montserrat', sans-serif;
-    font-size: 48px;
-    font-weight: 800;
+    font-size: 46px;
+    font-weight: 700;
     color: #ffccbc;
     margin-top: 0;
-    text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.95);
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.9);
 }
