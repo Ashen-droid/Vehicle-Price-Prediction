@@ -13,11 +13,25 @@
         rel="stylesheet">
 
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        select:invalid {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        select option {
+            color: #ffffff;
+            background-color: #2a2a2a;
+        }
+
+        select option[disabled] {
+            color: rgba(255, 255, 255, 0.3);
+        }
+    </style>
 </head>
 
 <body>
     <div class="main-wrapper">
-
         <div class="top-header">
             <span class="logo-icon">🚗</span>
             <h1>AutoValue AI</h1>
@@ -30,16 +44,45 @@
                 <p>Enter the vehicle details and let our machine learning model estimate its value.</p>
 
                 <form id="prediction-form">
+
+                    <!-- Vehicle Brand -->
+                    <div class="input-group">
+                        <label>Vehicle Brand</label>
+                        <select id="brand" required>
+                            <option value="" disabled selected>Select Brand</option>
+                            <option value="0">Honda</option>
+                            <option value="1">Nissan</option>
+                            <option value="2">Suzuki</option>
+                            <option value="3">Toyota</option>
+                        </select>
+                    </div>
+
+                    <!-- Vehicle Model -->
+                    <div class="input-group">
+                        <label>Vehicle Model</label>
+                        <select id="model" required>
+                            <option value="" disabled selected>Select Model</option>
+                            <option value="0">Alto</option>
+                            <option value="1">Civic</option>
+                            <option value="2">Corolla</option>
+                            <option value="3">Swift</option>
+                            <option value="4">Vitz</option>
+                        </select>
+                    </div>
+
+                    <!-- Make Year -->
                     <div class="input-group">
                         <label>Make Year</label>
                         <select id="make_year" required></select>
                     </div>
 
+                    <!-- Engine Capacity -->
                     <div class="input-group">
                         <label>Engine Capacity (CC)</label>
                         <select id="engine_cc" required></select>
                     </div>
 
+                    <!-- Mileage -->
                     <div class="input-group">
                         <label>Mileage (km driven)</label>
                         <input type="number" id="km_driven" list="mileage_list"
@@ -47,6 +90,7 @@
                         <datalist id="mileage_list"></datalist>
                     </div>
 
+                    <!-- Fuel Type -->
                     <div class="input-group">
                         <label>Fuel Type</label>
                         <select id="fuel_type" required>
@@ -57,6 +101,7 @@
                         </select>
                     </div>
 
+                    <!-- Transmission -->
                     <div class="input-group">
                         <label>Transmission</label>
                         <select id="transmission" required>
@@ -79,7 +124,7 @@
     </div>
 
     <script>
-
+        // Make Year
         const yearDropdown = document.getElementById('make_year');
         yearDropdown.innerHTML = '<option value="" disabled selected>Select Make Year</option>';
         for (let year = 2025; year >= 1990; year--) {
@@ -88,6 +133,7 @@
             yearDropdown.appendChild(option);
         }
 
+        // Engine CC
         const ccDropdown = document.getElementById('engine_cc');
         ccDropdown.innerHTML = '<option value="" disabled selected>Select Engine Capacity</option>';
         for (let cc = 800; cc <= 3000; cc += 50) {
@@ -96,7 +142,7 @@
             ccDropdown.appendChild(option);
         }
 
-
+        // Mileage
         const mileageDatalist = document.getElementById('mileage_list');
         for (let i = 0; i <= 300000; i += 500) {
             let option = document.createElement('option');
@@ -108,12 +154,16 @@
             e.preventDefault();
 
             const data = {
+                "brand": parseInt(document.getElementById('brand').value),
+                "model": parseInt(document.getElementById('model').value),
                 "make_year": parseInt(document.getElementById('make_year').value),
                 "engine_capacity(CC)": parseFloat(document.getElementById('engine_cc').value),
                 "km_driven": parseFloat(document.getElementById('km_driven').value),
                 "fuel_type": parseInt(document.getElementById('fuel_type').value),
                 "transmission": parseInt(document.getElementById('transmission').value),
-                "brand": 5, "model": 12, "ownership": 0, "has_insurance": 1, "spare_key": 1
+                "ownership": 0,
+                "has_insurance": 1,
+                "spare_key": 1
             };
 
             fetch('/predict', {
