@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AutoValue AI - Smart Vehicle Pricing</title>
 
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -33,13 +32,11 @@
                 <form id="prediction-form">
                     <div class="input-group">
                         <label>Make Year</label>
-                        <!-- JavaScript හරහා Placeholder එක මෙතැනට එකතු වේ -->
                         <select id="make_year" required></select>
                     </div>
 
                     <div class="input-group">
                         <label>Engine Capacity (CC)</label>
-                        <!-- JavaScript හරහා Placeholder එක මෙතැනට එකතු වේ -->
                         <select id="engine_cc" required></select>
                     </div>
 
@@ -53,7 +50,6 @@
                     <div class="input-group">
                         <label>Fuel Type</label>
                         <select id="fuel_type" required>
-                            <!-- අලුතින් එකතු කළ Placeholder එක -->
                             <option value="" disabled selected>Select Fuel Type</option>
                             <option value="1">Petrol</option>
                             <option value="0">Diesel</option>
@@ -63,11 +59,10 @@
 
                     <div class="input-group">
                         <label>Transmission</label>
-                        <select id="transmission" required>
-                            <!-- අලුතින් එකතු කළ Placeholder එක -->
-                            <option value="" disabled selected>Select Transmission</option>
-                            <option value="1">Automatic</option>
-                            <option value="0">Manual</option>
+                        <select id="transmission" require></select>
+                        <option value="" disabled selected>Select Transmission</option>
+                        <option value="1">Automatic</option>
+                        <option value="0">Manual</option>
                         </select>
                     </div>
 
@@ -84,9 +79,8 @@
     </div>
 
     <script>
-        // 1. Make Year Dropdown
+
         const yearDropdown = document.getElementById('make_year');
-        // Placeholder එක JS හරහා එකතු කිරීම
         yearDropdown.innerHTML = '<option value="" disabled selected>Select Make Year</option>';
         for (let year = 2025; year >= 1990; year--) {
             let option = document.createElement('option');
@@ -94,9 +88,7 @@
             yearDropdown.appendChild(option);
         }
 
-        // 2. Engine Capacity Dropdown
         const ccDropdown = document.getElementById('engine_cc');
-        // Placeholder එක JS හරහා එකතු කිරීම
         ccDropdown.innerHTML = '<option value="" disabled selected>Select Engine Capacity</option>';
         for (let cc = 800; cc <= 3000; cc += 50) {
             let option = document.createElement('option');
@@ -104,7 +96,7 @@
             ccDropdown.appendChild(option);
         }
 
-        // 3. Mileage Datalist
+
         const mileageDatalist = document.getElementById('mileage_list');
         for (let i = 0; i <= 300000; i += 500) {
             let option = document.createElement('option');
