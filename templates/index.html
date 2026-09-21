@@ -30,6 +30,23 @@
                     <input type="number" id="km_driven" placeholder="e.g. 45000" required>
                 </div>
 
+                <!-- අලුතින් එකතු කළ Dropdowns -->
+                <div class="input-group">
+                    <label>Fuel Type</label>
+                    <select id="fuel_type">
+                        <option value="1">Petrol</option>
+                        <option value="0">Diesel</option>
+                        <option value="2">CNG</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>Transmission</label>
+                    <select id="transmission">
+                        <option value="1">Automatic</option>
+                        <option value="0">Manual</option>
+                    </select>
+                </div>
 
                 <button type="submit" class="predict-btn">Predict Vehicle Price</button>
             </form>
@@ -50,8 +67,9 @@
                 "make_year": parseInt(document.getElementById('make_year').value),
                 "engine_capacity(CC)": parseFloat(document.getElementById('engine_cc').value),
                 "km_driven": parseFloat(document.getElementById('km_driven').value),
-                "brand": 5, "model": 12, "transmission": 1, "fuel_type": 1,
-                "ownership": 0, "has_insurance": 1, "spare_key": 1
+                "fuel_type": parseInt(document.getElementById('fuel_type').value),
+                "transmission": parseInt(document.getElementById('transmission').value),
+                "brand": 5, "model": 12, "ownership": 0, "has_insurance": 1, "spare_key": 1
             };
 
             fetch('/predict', {
