@@ -1,124 +1,124 @@
-<DOCTYPE html>
-    <html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>CarMind AI - Intelligent Vehicle Valuation</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CarMind AI - Intelligent Vehicle Valuation</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
 
-    <body>
-        <div class="container">
-            <div class="form-section">
-                <h2>Tell us about your car</h2>
-                <p>Enter the vehicle details and let our machine learning model estimate its value.</p>
+<body>
+    <div class="container">
+        <div class="form-section">
+            <h2>Tell us about your car</h2>
+            <p>Enter the vehicle details and let our machine learning model estimate its value.</p>
 
-                <form id="prediction-form">
+            <form id="prediction-form">
+                <div class="input-group">
+                    <label>Make Year</label>
+                    <select id="make_year" required></select>
+                </div>
 
-                    <div class="input-group">
-                        <label>Make Year</label>
-                        <select id="make_year" required>
-                            <option value="" disabled selected>Select Year</option>
-                        </select>
-                    </div>
+                <div class="input-group">
+                    <label>Engine Capacity (CC)</label>
+                    <select id="engine_cc" required></select>
+                </div>
 
-                    <div class="input-group">
-                        <label>Engine Capacity (CC)</label>
-                        <select id="engine_cc" required>
-                            <option value="" disabled selected>Select CC</option>
-                        </select>
-                    </div>
+                <div class="input-group">
+                    <label>Mileage (km driven)</label>
+                    <select id="km_driven" required></select>
+                </div>
 
-                    <div class="input-group">
-                        <label>Mileage (km driven)</label>
-                        <input type="number" id="km_driven" placeholder="e.g. 45000" required>
-                    </div>
+                <div class="input-group">
+                    <label>Fuel Type</label>
+                    <select id="fuel_type">
+                        <option value="1">Petrol</option>
+                        <option value="0">Diesel</option>
+                        <option value="2">CNG</option>
+                    </select>
+                </div>
 
-                    <div class="input-group">
-                        <label>Fuel Type</label>
-                        <select id="fuel_type" required>
-                            <option value="" disabled selected>Select Fuel Type</option>
-                            <option value="1">Petrol</option>
-                            <option value="0">Diesel</option>
-                            <option value="2">CNG</option>
-                        </select>
-                    </div>
+                <div class="input-group">
+                    <label>Transmission</label>
+                    <select id="transmission">
+                        <option value="1">Automatic</option>
+                        <option value="0">Manual</option>
+                    </select>
+                </div>
 
-                    <div class="input-group">
-                        <label>Transmission</label>
-                        <select id="transmission" required>
-                            <option value="" disabled selected>Select Transmission</option>
-                            <option value="1">Automatic</option>
-                            <option value="0">Manual</option>
-                        </select>
-                    </div>
-
-                    <button type="submit" class="predict-btn">Predict Vehicle Price</button>
-                </form>
-            </div>
-
-            <div class="result-section">
-                <h3>AI MARKET ESTIMATE</h3>
-                <p>Estimated Value</p>
-                <h1 id="estimated-price">Rs. 0.00</h1>
-            </div>
+                <button type="submit" class="predict-btn">Predict Vehicle Price</button>
+            </form>
         </div>
 
-        <script>
-            const yearSelect = document.getElementById('make_year');
-            const currentYear = new Date().getFullYear();
-            for (let year = currentYear; year >= 1990; year--) {
-                let option = document.createElement('option');
-                option.value = year;
-                option.textContent = year;
-                yearSelect.appendChild(option);
-            }
+        <div class="result-section">
+            <h3>AI MARKET ESTIMATE</h3>
+            <p>Estimated Value</p>
+            <h1 id="estimated-price">Rs. 0.00</h1>
+        </div>
+    </div>
 
-            const ccSelect = document.getElementById('engine_cc');
-            for (let cc = 800; cc <= 3000; cc += 50) {
-                let option = document.createElement('option');
-                option.value = cc;
-                option.textContent = cc + ' CC';
-                ccSelect.appendChild(option);
-            }
+    <script>
+        // 1. Make Year Dropdown (1990 සිට 2025 දක්වා)
+        const yearDropdown = document.getElementById('make_year');
+        for (let year = 2025; year >= 1990; year--) {
+            let option = document.createElement('option');
+            option.value = year;
+            option.text = year;
+            yearDropdown.appendChild(option);
+        }
 
-            document.getElementById('prediction-form').addEventListener('submit', function (e) {
-                e.preventDefault();
+        // 2. Engine Capacity Dropdown (800 CC සිට 3000 CC දක්වා, 50 ගුණාකාර වලින්)
+        const ccDropdown = document.getElementById('engine_cc');
+        for (let cc = 800; cc <= 3000; cc += 50) {
+            let option = document.createElement('option');
+            option.value = cc;
+            option.text = cc + " CC";
+            ccDropdown.appendChild(option);
+        }
 
-                const data = {
-                    "brand": 5,
-                    "model": 12,
-                    "transmission": parseInt(document.getElementById('transmission').value),
-                    "make_year": parseInt(document.getElementById('make_year').value),
-                    "fuel_type": parseInt(document.getElementById('fuel_type').value),
-                    "engine_capacity(CC)": parseFloat(document.getElementById('engine_cc').value),
-                    "km_driven": parseFloat(document.getElementById('km_driven').value),
-                    "ownership": 0,
-                    "has_insurance": 1,
-                    "spare_key": 1
-                };
+        // 3. Mileage Dropdown (0 සිට 300,000 දක්වා, 500 ගුණාකාර වලින්)
+        const mileageDropdown = document.getElementById('km_driven');
+        for (let i = 0; i <= 300000; i += 500) {
+            let option = document.createElement('option');
+            option.value = i;
+            option.text = i.toLocaleString() + " km";
+            mileageDropdown.appendChild(option);
+        }
 
-                fetch('/predict', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(data),
+        document.getElementById('prediction-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const data = {
+                "make_year": parseInt(document.getElementById('make_year').value),
+                "engine_capacity(CC)": parseFloat(document.getElementById('engine_cc').value),
+                "km_driven": parseFloat(document.getElementById('km_driven').value),
+                "fuel_type": parseInt(document.getElementById('fuel_type').value),
+                "transmission": parseInt(document.getElementById('transmission').value),
+                // ඉතිරි දේවල් default අගයන් ලෙස
+                "brand": 5, "model": 12, "ownership": 0, "has_insurance": 1, "spare_key": 1
+            };
+
+            fetch('/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.estimated_price) {
+                        document.getElementById('estimated-price').innerText = 'Rs. ' + data.estimated_price.toLocaleString();
+                    } else {
+                        alert('Error: ' + data.error);
+                    }
                 })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.estimated_price) {
-                            document.getElementById('estimated-price').innerText = 'Rs. ' + data.estimated_price.toLocaleString();
-                        } else {
-                            alert('Error: ' + data.error);
-                        }
-                    })
-                    .catch((error) => {
-                        console.error('Error:', error);
-                    });
-            });
-        </script>
-    </body>
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        });
+    </script>
+</body>
 
-    </html>
+</html>
