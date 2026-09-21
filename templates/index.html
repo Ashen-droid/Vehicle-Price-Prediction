@@ -1,97 +1,124 @@
-<!DOCTYPE html>
-<html lang="en">
+<DOCTYPE html>
+    <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CarMind AI - Intelligent Vehicle Valuation</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>CarMind AI - Intelligent Vehicle Valuation</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    </head>
 
-<body>
-    <div class="container">
-        <div class="form-section">
-            <h2>Tell us about your car</h2>
-            <p>Enter the vehicle details and let our machine learning model estimate its value.</p>
+    <body>
+        <div class="container">
+            <div class="form-section">
+                <h2>Tell us about your car</h2>
+                <p>Enter the vehicle details and let our machine learning model estimate its value.</p>
 
-            <form id="prediction-form">
-                <div class="input-group">
-                    <label>Make Year</label>
-                    <input type="number" id="make_year" placeholder="e.g. 2018" required>
-                </div>
+                <form id="prediction-form">
 
-                <div class="input-group">
-                    <label>Engine Capacity (CC)</label>
-                    <input type="number" id="engine_cc" placeholder="e.g. 1500" required>
-                </div>
+                    <div class="input-group">
+                        <label>Make Year</label>
+                        <select id="make_year" required>
+                            <option value="" disabled selected>Select Year</option>
+                        </select>
+                    </div>
 
-                <div class="input-group">
-                    <label>Mileage (km driven)</label>
-                    <input type="number" id="km_driven" placeholder="e.g. 45000" required>
-                </div>
+                    <div class="input-group">
+                        <label>Engine Capacity (CC)</label>
+                        <select id="engine_cc" required>
+                            <option value="" disabled selected>Select CC</option>
+                        </select>
+                    </div>
 
-                <!-- අලුතින් එකතු කළ Dropdowns -->
-                <div class="input-group">
-                    <label>Fuel Type</label>
-                    <select id="fuel_type">
-                        <option value="1">Petrol</option>
-                        <option value="0">Diesel</option>
-                        <option value="2">CNG</option>
-                    </select>
-                </div>
+                    <div class="input-group">
+                        <label>Mileage (km driven)</label>
+                        <input type="number" id="km_driven" placeholder="e.g. 45000" required>
+                    </div>
 
-                <div class="input-group">
-                    <label>Transmission</label>
-                    <select id="transmission">
-                        <option value="1">Automatic</option>
-                        <option value="0">Manual</option>
-                    </select>
-                </div>
+                    <div class="input-group">
+                        <label>Fuel Type</label>
+                        <select id="fuel_type" required>
+                            <option value="" disabled selected>Select Fuel Type</option>
+                            <option value="1">Petrol</option>
+                            <option value="0">Diesel</option>
+                            <option value="2">CNG</option>
+                        </select>
+                    </div>
 
-                <button type="submit" class="predict-btn">Predict Vehicle Price</button>
-            </form>
+                    <div class="input-group">
+                        <label>Transmission</label>
+                        <select id="transmission" required>
+                            <option value="" disabled selected>Select Transmission</option>
+                            <option value="1">Automatic</option>
+                            <option value="0">Manual</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="predict-btn">Predict Vehicle Price</button>
+                </form>
+            </div>
+
+            <div class="result-section">
+                <h3>AI MARKET ESTIMATE</h3>
+                <p>Estimated Value</p>
+                <h1 id="estimated-price">Rs. 0.00</h1>
+            </div>
         </div>
 
-        <div class="result-section">
-            <h3>AI MARKET ESTIMATE</h3>
-            <p>Estimated Value</p>
-            <h1 id="estimated-price">Rs. 0.00</h1>
-        </div>
-    </div>
+        <script>
+            const yearSelect = document.getElementById('make_year');
+            const currentYear = new Date().getFullYear();
+            for (let year = currentYear; year >= 1990; year--) {
+                let option = document.createElement('option');
+                option.value = year;
+                option.textContent = year;
+                yearSelect.appendChild(option);
+            }
 
-    <script>
-        document.getElementById('prediction-form').addEventListener('submit', function (e) {
-            e.preventDefault();
+            const ccSelect = document.getElementById('engine_cc');
+            for (let cc = 800; cc <= 3000; cc += 50) {
+                let option = document.createElement('option');
+                option.value = cc;
+                option.textContent = cc + ' CC';
+                ccSelect.appendChild(option);
+            }
 
-            const data = {
-                "make_year": parseInt(document.getElementById('make_year').value),
-                "engine_capacity(CC)": parseFloat(document.getElementById('engine_cc').value),
-                "km_driven": parseFloat(document.getElementById('km_driven').value),
-                "fuel_type": parseInt(document.getElementById('fuel_type').value),
-                "transmission": parseInt(document.getElementById('transmission').value),
-                "brand": 5, "model": 12, "ownership": 0, "has_insurance": 1, "spare_key": 1
-            };
+            document.getElementById('prediction-form').addEventListener('submit', function (e) {
+                e.preventDefault();
 
-            fetch('/predict', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.estimated_price) {
-                        document.getElementById('estimated-price').innerText = 'Rs. ' + data.estimated_price.toLocaleString();
-                    } else {
-                        alert('Error: ' + data.error);
-                    }
+                const data = {
+                    "brand": 5,
+                    "model": 12,
+                    "transmission": parseInt(document.getElementById('transmission').value),
+                    "make_year": parseInt(document.getElementById('make_year').value),
+                    "fuel_type": parseInt(document.getElementById('fuel_type').value),
+                    "engine_capacity(CC)": parseFloat(document.getElementById('engine_cc').value),
+                    "km_driven": parseFloat(document.getElementById('km_driven').value),
+                    "ownership": 0,
+                    "has_insurance": 1,
+                    "spare_key": 1
+                };
+
+                fetch('/predict', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
                 })
-                .catch((error) => {
-                    console.error('Error:', error);
-                });
-        });
-    </script>
-</body>
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.estimated_price) {
+                            document.getElementById('estimated-price').innerText = 'Rs. ' + data.estimated_price.toLocaleString();
+                        } else {
+                            alert('Error: ' + data.error);
+                        }
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
+            });
+        </script>
+    </body>
 
-</html>
+    </html>
