@@ -27,7 +27,9 @@
 
                 <div class="input-group">
                     <label>Mileage (km driven)</label>
-                    <select id="km_driven" required></select>
+                    <input type="number" id="km_driven" list="mileage_list" placeholder="Select or type (e.g. 45000)"
+                        min="0" required>
+                    <datalist id="mileage_list"></datalist>
                 </div>
 
                 <div class="input-group">
@@ -59,7 +61,6 @@
     </div>
 
     <script>
-        // 1. Make Year Dropdown (1990 සිට 2025 දක්වා)
         const yearDropdown = document.getElementById('make_year');
         for (let year = 2025; year >= 1990; year--) {
             let option = document.createElement('option');
@@ -68,7 +69,6 @@
             yearDropdown.appendChild(option);
         }
 
-        // 2. Engine Capacity Dropdown (800 CC සිට 3000 CC දක්වා, 50 ගුණාකාර වලින්)
         const ccDropdown = document.getElementById('engine_cc');
         for (let cc = 800; cc <= 3000; cc += 50) {
             let option = document.createElement('option');
@@ -77,13 +77,10 @@
             ccDropdown.appendChild(option);
         }
 
-        // 3. Mileage Dropdown (0 සිට 300,000 දක්වා, 500 ගුණාකාර වලින්)
-        const mileageDropdown = document.getElementById('km_driven');
+        const mileageDatalist = document.getElementById('mileage_list');
         for (let i = 0; i <= 300000; i += 500) {
             let option = document.createElement('option');
-            option.value = i;
-            option.text = i.toLocaleString() + " km";
-            mileageDropdown.appendChild(option);
+            mileageDatalist.appendChild(option);
         }
 
         document.getElementById('prediction-form').addEventListener('submit', function (e) {
@@ -95,7 +92,6 @@
                 "km_driven": parseFloat(document.getElementById('km_driven').value),
                 "fuel_type": parseInt(document.getElementById('fuel_type').value),
                 "transmission": parseInt(document.getElementById('transmission').value),
-                // ඉතිරි දේවල් default අගයන් ලෙස
                 "brand": 5, "model": 12, "ownership": 0, "has_insurance": 1, "spare_key": 1
             };
 
